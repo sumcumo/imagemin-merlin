@@ -85,10 +85,11 @@ The point is: Micro-optimization still needs to be taken care of through complem
 Some new features we’re working on or think about: 
 
 * Give the option to configure the underlying imagemin plugins (somewhat prepared for but not completed yet).
-* Observe `.gitignore` files when Merlin doesn’t run as `--staged`.
+* Observe .gitignore files when Merlin doesn’t run as `--staged`.
 * Offer an `ignore` parameter to filter undesired folders and files.
+* Support project structures in which the project’s .git folder is not at the same level as its package.json – at the moment, automatic mode doesn’t work in these cases. 
 
-Thoughts or suggestions? Please file an [issue](https://github.com/sumcumo/imagemin-merlin/issues/new) – thank you!
+Thoughts, suggestions, fixes? Please file an [issue](https://github.com/sumcumo/imagemin-merlin/issues/new) or send a pull request – thank you!
 
 ## License
 
