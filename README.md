@@ -2,7 +2,7 @@
 
 Merlin is an extension of [imagemin](https://www.npmjs.com/package/imagemin) that makes it _super-easy_ to automatically, efficiently compress GIF, JPG and PNG graphics.
 
-It’s “super-easy” for two reasons: 
+It’s “super-easy” for two reasons:
 
 1. Setup is simple and there’s no confusion around what needs to be done how, where, when and why. Install, run, done – forever.
 
@@ -18,7 +18,7 @@ Install Merlin in respective Node project:
 npm i -D @sum.cumo/imagemin-merlin
 ```
 
-### 2a) Set up manual optimization 
+### 2a) Set up manual optimization
 
 For manual use, add the following in the `scripts` section of the project’s package.json:
 
@@ -35,6 +35,8 @@ To ensure that _all_ GIFs, JPGs and PNGs have at least been optimized once, it�
 There’s a `--folder` option that allows to set a particular folder for compression, different from the project root. For example, `npm run imagemin -- --folder=static`. The `node_modules` folder is ignored by default.
 
 `--dry` is an optional parameter to run Merlin in “dry mode.” All changed files can then be inspected under `/tmp/imagemin-merlin`.
+
+`-ignore` is an optional parameter to let Merlin ignore the specified paths. Multiple paths has to be seperated by a comma.
 
 ### 2b) Set up automatic optimization
 
@@ -76,18 +78,17 @@ That last piece is useful since Merlin compresses losslessly, so that there’s 
 
 ## What does Merlin _not_ do?
 
-Merlin is no substitute for image fine-tuning and micro-optimization. That is really difficult to do in an automated fashion, because that type of compression requires weighing quality and performance, which is [context-dependent](https://meiert.com/en/blog/understanding-image-compression/). In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even hard to do manually. 
+Merlin is no substitute for image fine-tuning and micro-optimization. That is really difficult to do in an automated fashion, because that type of compression requires weighing quality and performance, which is [context-dependent](https://meiert.com/en/blog/understanding-image-compression/). In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even hard to do manually.
 
 The point is: Micro-optimization still needs to be taken care of through complementary means, whether manually or through other tools (well including other packages from the [imagemin family](https://github.com/imagemin)). Merlin simply solves the problem that images are checked in or go live that are not compressed _at all_.
 
 ## What’s next?
 
-Some new features we’re working on or think about: 
+Some new features we’re working on or think about:
 
 * Give the option to configure the underlying imagemin plugins (somewhat prepared for but not completed yet).
 * Observe .gitignore files when Merlin doesn’t run as `--staged`.
-* Offer an `ignore` parameter to filter undesired folders and files.
-* Support project structures in which the project’s .git folder is not at the same level as its package.json – at the moment, automatic mode doesn’t work in these cases. 
+* Support project structures in which the project’s .git folder is not at the same level as its package.json – at the moment, automatic mode doesn’t work in these cases.
 
 Thoughts, suggestions, fixes? Please file an [issue](https://github.com/sumcumo/imagemin-merlin/issues/new) or send a pull request – thank you!
 
