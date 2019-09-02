@@ -36,7 +36,7 @@ There’s a `--folder` option that allows to set a particular folder for compres
 
 `--dry` is an optional parameter to run Merlin in “dry mode.” All changed files can then be inspected under `/tmp/imagemin-merlin`.
 
-`-ignore` is an optional parameter to let Merlin ignore the specified paths. Multiple paths has to be seperated by a comma.
+`--ignore` is an optional parameter to let Merlin ignore the specified paths. Multiple paths has to be seperated by a comma.
 
 ### 2b) Set up automatic optimization
 
