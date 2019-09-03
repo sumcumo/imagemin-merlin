@@ -15,6 +15,12 @@ module.exports = async argv => {
     rimraf.sync('/tmp/imagemin-merlin')
   }
 
+  let ignorePaths = []
+
+  if(argv.ignore){
+    ignorePaths = argv.ignore.split(',')
+  }
+
   // search for staged files
   if(argv.staged){
     sgf('A', async function(err, results){
@@ -24,8 +30,13 @@ module.exports = async argv => {
 
       let didRun = false
 
-      const filteredResults = results
+      let filteredResults = results
         .filter(result => result.filename.match(regex))
+
+      ignorePaths.forEach(ignorePath => {
+        filteredResults = filteredResults
+          .filter(result => !result.filename.match(new RegExp(ignorePath)))
+      })
 
       for (let index = 0; index < filteredResults.length; index++) {
         const result = filteredResults[index];
@@ -42,8 +53,13 @@ module.exports = async argv => {
       folder = argv.folder
     }
 
-    const files = find.fileSync(regex, folder)
+    let files = find.fileSync(regex, folder)
     let didRun = false
+
+    ignorePaths.forEach(ignorePath => {
+      files = files
+        .filter(file => !file.match(new RegExp(ignorePath)))
+    })
 
     for (let index = 0; index < files.length; index++) {
       const file = files[index]
