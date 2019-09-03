@@ -1,12 +1,12 @@
 const rimraf = require('rimraf')
-const find = require('find')
 const sgf = require('staged-git-files')
 const utils = require('./utils.js')
 const cwd = require('cwd')
+const globby  = require('globby')
 
 // files to be crushed
-const regex = new RegExp(/\.gif|\.jpeg|\.jpg|\.png$/)
-console.log(`(Search pattern: ${regex})\n`)
+const fileTypes = ['gif', 'jpg', 'jpeg', 'png']
+console.log(`(Search pattern: ${fileTypes.join(', ')})\n`)
 
 let savedKB = 0
 
@@ -15,11 +15,9 @@ module.exports = async argv => {
     rimraf.sync('/tmp/imagemin-merlin')
   }
 
-  let ignorePaths = []
-
-  if(argv.ignore){
-    ignorePaths = argv.ignore.split(',')
-  }
+  const patterns = getFilePattern(argv.ignore)
+  let files = findFiles(patterns)
+  let crushFiles = files
 
   // search for staged files
   if(argv.staged){
@@ -28,49 +26,14 @@ module.exports = async argv => {
         return console.error(err)
       }
 
-      let didRun = false
+      crushFiles = results
+        .map(result => result.filename)
+        .filter(filename => files.includes(filename))
 
-      let filteredResults = results
-        .filter(result => result.filename.match(regex))
-
-      ignorePaths.forEach(ignorePath => {
-        filteredResults = filteredResults
-          .filter(result => !result.filename.match(new RegExp(ignorePath)))
-      })
-
-      for (let index = 0; index < filteredResults.length; index++) {
-        const result = filteredResults[index];
-        didRun = true
-        savedKB += await utils.crushing(result.filename, argv.dry)
-      }
-
-      closingNote(didRun)
+      crush(crushFiles, argv.dry)
     })
   } else {
-    let folder = cwd()
-
-    if(argv.folder){
-      folder = argv.folder
-    }
-
-    let files = find.fileSync(regex, folder)
-    let didRun = false
-
-    ignorePaths.forEach(ignorePath => {
-      files = files
-        .filter(file => !file.match(new RegExp(ignorePath)))
-    })
-
-    for (let index = 0; index < files.length; index++) {
-      const file = files[index]
-
-      if(!file.match(/node_modules\//)){
-        didRun = true
-        savedKB += await utils.crushing(file, argv.dry)
-      }
-    }
-
-    closingNote(didRun)
+    crush(crushFiles, argv.dry)
   }
 }
 
@@ -80,4 +43,35 @@ const closingNote = (didRun) => {
   } else {
     console.info('\nThere were no images found to crush ¯\\_(ツ)_/¯ See you next time.')
   }
+}
+
+const crush = async (files, dry) => {
+  for (let index = 0; index < files.length; index++) {
+    const file = files[index]
+    savedKB += await utils.crushing(file, dry)
+  }
+
+  const didRun = files.length > 0
+  closingNote(didRun)
+}
+
+const getFilePattern = (ignore) => {
+  const patterns = []
+
+  fileTypes.forEach((fileType) => {
+    patterns.push(`**/*.${fileType}`)
+  })
+
+  if(ignore){
+    const ignorePaths = ignore.split(',')
+    ignorePaths.forEach((path) => {
+      patterns.push(`!${path}`)
+    })
+  }
+
+  return patterns
+}
+
+const findFiles = (patterns, options = {}) => {
+  return globby.sync(patterns, { gitignore: true, ...options })
 }
