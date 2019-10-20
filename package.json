@@ -31,6 +31,7 @@
     "cwd": "^0.10.0",
     "filesize": "^4.1.2",
     "find": "^0.3.0",
+    "globby": "^10.0.1",
     "imagemin-cli": "^4.0.0",
     "parse-filepath": "^1.0.2",
     "rimraf": "^2.6.3",
