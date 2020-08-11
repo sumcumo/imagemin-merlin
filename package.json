@@ -27,14 +27,14 @@
   "author": "sum.cumo",
   "license": "Apache-2.0",
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^4.1.0",
     "cwd": "^0.10.0",
-    "filesize": "^4.1.2",
+    "filesize": "^6.1.0",
     "find": "^0.3.0",
-    "imagemin-cli": "^4.0.0",
+    "imagemin-cli": "^6.0.0",
     "parse-filepath": "^1.0.2",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.2",
     "staged-git-files": "^1.1.2",
-    "yargs": "^13.2.2"
+    "yargs": "^15.4.1"
   }
 }
