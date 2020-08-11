@@ -1,6 +1,6 @@
 {
   "name": "@sum.cumo/imagemin-merlin",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Crush GIF, JPG, and PNG images lossless-ly (manually or automatically)",
   "bin": {
     "imagemin-merlin": "./bin/imagemin-merlin.js"
