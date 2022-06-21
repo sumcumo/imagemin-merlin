@@ -31,7 +31,7 @@
     "cwd": "^0.10.0",
     "filesize": "^6.1.0",
     "find": "^0.3.0",
-    "imagemin-cli": "^6.0.0",
+    "imagemin-cli": "^7.0.0",
     "parse-filepath": "^1.0.2",
     "rimraf": "^3.0.2",
     "staged-git-files": "^1.1.2",
