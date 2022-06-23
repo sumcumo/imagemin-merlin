@@ -1,8 +1,8 @@
-const rimraf = require('rimraf')
-const find = require('find')
-const sgf = require('staged-git-files')
-const utils = require('./utils.js')
-const cwd = require('cwd')
+import rimraf from 'rimraf'
+import find from 'find'
+import sgf from 'staged-git-files'
+import { utils } from './utils.js'
+import cwd from 'cwd'
 
 // files to be crushed
 const regex = new RegExp(/\.gif|\.jpeg|\.jpg|\.png$/)
@@ -10,7 +10,8 @@ console.log(`(Search pattern: ${regex})\n`)
 
 let savedKB = 0
 
-module.exports = async argv => {
+export default async argv => {
+
   if(argv.dry){
     rimraf.sync('/tmp/imagemin-merlin')
   }

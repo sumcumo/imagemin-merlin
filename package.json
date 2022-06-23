@@ -26,6 +26,7 @@
   ],
   "author": "sum.cumo",
   "license": "Apache-2.0",
+  "type": "module",
   "dependencies": {
     "chalk": "^5.0.1",
     "cwd": "^0.10.0",
