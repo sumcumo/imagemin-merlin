@@ -3,14 +3,16 @@ import find from 'find'
 import sgf from 'staged-git-files'
 import { utils } from './utils.js'
 import cwd from 'cwd'
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const yargs = _yargs(hideBin(process.argv));
 
-// files to be crushed
-const regex = new RegExp(/\.gif|\.jpeg|\.jpg|\.png$/)
-console.log(`(Search pattern: ${regex})\n`)
+(async () => {
+  const argv = await yargs
+    .argv
 
-let savedKB = 0
-
-export default async argv => {
+  // Test
+  console.log(argv === argv.staged)
 
   if(argv.dry){
     rimraf.sync('/tmp/imagemin-merlin')
@@ -73,7 +75,13 @@ export default async argv => {
 
     closingNote(didRun)
   }
-}
+})();
+
+// files to be crushed
+const regex = new RegExp(/\.gif|\.jpeg|\.jpg|\.png$/)
+console.log(`(Search pattern: ${regex})\n`)
+
+let savedKB = 0
 
 const closingNote = (didRun) => {
   if(didRun){
