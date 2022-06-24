@@ -1,5 +1,5 @@
-const jpegtran = {
-  // see https://www.npmjs.com/package/imagemin-jpegtran
+const mozjpeg = {
+  // see https://www.npmjs.com/package/imagemin-mozjpeg
   progressive: true,
 }
 const optipng = {
@@ -9,4 +9,4 @@ const gifsicle = {
   // see https://www.npmjs.com/package/imagemin-gifsicle
 }
 
-export const options = { jpegtran, optipng, gifsicle }
+export const options = { mozjpeg, optipng, gifsicle }

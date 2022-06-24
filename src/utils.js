@@ -2,13 +2,14 @@ import filesize from 'filesize'
 import fs from 'fs'
 import parsePath from 'parse-filepath'
 import imagemin from 'imagemin'
-import imageminJpegtran from 'imagemin-jpegtran'
+import imageminMozjpeg from 'imagemin-mozjpeg'
 import imageminOptipng from 'imagemin-optipng'
 import imageminGifsicle from 'imagemin-gifsicle'
 import chalk from 'chalk'
 import { options } from './plugin_options.js'
 
 const crushing = async (filename, dry) => {
+
   const filenameBackup = `${filename}.bak`
   fs.copyFileSync(filename, filenameBackup)
 
@@ -24,9 +25,10 @@ const crushing = async (filename, dry) => {
     output = `/tmp/imagemin-merlin/${parsePath(filename).absolute}`
   }
 
-  await imagemin([filename], output, {
+  await imagemin([filename], {
+    destination: output,
     plugins: [
-      imageminJpegtran(options.jpegtran),
+      imageminMozjpeg(options.mozjpeg),
       imageminOptipng(options.optipng),
       imageminGifsicle(options.gifsicle),
     ]

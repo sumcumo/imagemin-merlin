@@ -12,10 +12,10 @@ const yargs = _yargs(hideBin(process.argv));
     .argv
 
   // Test
-  console.log(argv === argv.staged)
+  // console.log(argv)
 
   if(argv.dry){
-    rimraf.sync('/tmp/imagemin-merlin')
+    rimraf.sync('/tmp/imagemin-merlin');
   }
 
   let ignorePaths = []
