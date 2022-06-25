@@ -1,14 +1,15 @@
-const filesize = require('filesize')
-const fs = require('fs')
-const parsePath = require('parse-filepath')
-const imagemin = require('imagemin')
-const imageminJpegtran = require('imagemin-jpegtran')
-const imageminOptipng = require('imagemin-optipng')
-const imageminGifsicle = require('imagemin-gifsicle')
-const chalk = require('chalk')
-const options = require('./plugin_options.js')
+import filesize from 'filesize'
+import fs from 'fs'
+import parsePath from 'parse-filepath'
+import imagemin from 'imagemin'
+import imageminMozjpeg from 'imagemin-mozjpeg'
+import imageminOptipng from 'imagemin-optipng'
+import imageminGifsicle from 'imagemin-gifsicle'
+import chalk from 'chalk'
+import { options } from './plugin_options.js'
 
 const crushing = async (filename, dry) => {
+
   const filenameBackup = `${filename}.bak`
   fs.copyFileSync(filename, filenameBackup)
 
@@ -24,9 +25,10 @@ const crushing = async (filename, dry) => {
     output = `/tmp/imagemin-merlin/${parsePath(filename).absolute}`
   }
 
-  await imagemin([filename], output, {
+  await imagemin([filename], {
+    destination: output,
     plugins: [
-      imageminJpegtran(options.jpegtran),
+      imageminMozjpeg(options.mozjpeg),
       imageminOptipng(options.optipng),
       imageminGifsicle(options.gifsicle),
     ]
@@ -75,7 +77,4 @@ const sizeHuman = (size) => {
   return filesize(size, { round: 5 })
 }
 
-module.exports = {
-  crushing,
-  sizeHuman,
-}
+export const utils = { crushing, sizeHuman }

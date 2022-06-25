@@ -1,18 +1,21 @@
-const rimraf = require('rimraf')
-const find = require('find')
-const sgf = require('staged-git-files')
-const utils = require('./utils.js')
-const cwd = require('cwd')
+import rimraf from 'rimraf'
+import find from 'find'
+import sgf from 'staged-git-files'
+import { utils } from './utils.js'
+import cwd from 'cwd'
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const yargs = _yargs(hideBin(process.argv));
 
-// files to be crushed
-const regex = new RegExp(/\.gif|\.jpeg|\.jpg|\.png$/)
-console.log(`(Search pattern: ${regex})\n`)
+(async () => {
+  const argv = await yargs
+    .argv
 
-let savedKB = 0
+  // Test
+  // console.log(argv)
 
-module.exports = async argv => {
   if(argv.dry){
-    rimraf.sync('/tmp/imagemin-merlin')
+    rimraf.sync('/tmp/imagemin-merlin');
   }
 
   let ignorePaths = []
@@ -72,7 +75,13 @@ module.exports = async argv => {
 
     closingNote(didRun)
   }
-}
+})();
+
+// files to be crushed
+const regex = new RegExp(/\.gif|\.jpeg|\.jpg|\.png$/)
+console.log(`(Search pattern: ${regex})\n`)
+
+let savedKB = 0
 
 const closingNote = (didRun) => {
   if(didRun){
